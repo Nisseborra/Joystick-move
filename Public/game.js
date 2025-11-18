@@ -25,6 +25,7 @@ class joystick{
 
         this.dx = 0;
         this.dy = 0;
+        this.outside_radius;
 
     }
         
@@ -83,25 +84,46 @@ class joystick{
 
     function Eventen(){
         canvas.addEventListener('touchstart', e => {
+
+       
         const rect = canvas.getBoundingClientRect();
-        const px = e.touches[0].clientX - rect.left;
-        const py = e.touches[0].clientY - rect.top;
+        const px = e.touches[0].clientX -rect.left;
+        const py = e.touches[0].clientY -rect.top;
+        if (!toucharea(px, py, analog)) {
+        
+                analog.dx = 0;
+                analog.dy = 0;
+
+              return;
+        }
+            
+      
 
         analog.x = px;
         analog.y = py;
-
+    
             
 
         })
 
       canvas.addEventListener('touchmove', e => {
-        e.preventDefault();
+         e.preventDefault();
         const rect = canvas.getBoundingClientRect();
         const px = e.touches[0].clientX - rect.left;
         const py = e.touches[0].clientY - rect.top;
+        if (!toucharea(px, py, analog)) {
+            
+                analog.dx = 0;
+                analog.dy = 0;
+
+              return;
+        }
+            
+          
 
         analog.x = px;
         analog.y = py;
+         
 
         let ax = analog.x - analog.X;
         let ay = analog.y - analog.Y;
@@ -116,7 +138,9 @@ class joystick{
             analog.x = analog.X + analog.dx * analog.R;
             analog.y = analog.Y + analog.dy * analog.R;
         }
-        })
+      
+    }
+        )
 
         
         // sluta röra oå sig går till bak in i centrum
@@ -130,10 +154,28 @@ class joystick{
 
     }
 
+    function toucharea(x,y, joystick){
+
+        let dx = x - joystick.x;
+        let dy = y - joystick.y;
+        let distance = Math.sqrt(dx*dx + dy*dy);
+
+        if(joystick.R >= distance){
+            joystick.outside_radius = false;
+            return true;
+        }
+        else{
+            outside_radius= true;
+            
+            return false;
+        }
 
 
+
+
+    }
 
 
     let analog = new joystick(375, 800, 50);
     update();
-     Eventen();
+    Eventen();
