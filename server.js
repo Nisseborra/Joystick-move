@@ -5,6 +5,7 @@
 const express = require('express');
 const http = require('http');
 const { connect } = require('http2');
+const { disconnect } = require('process');
 const socketIO = require('socket.io');
 const app = express();
 const server = http.createServer(app);
@@ -21,14 +22,12 @@ server.listen(3000, () =>{
 
 let players ={}
 
-let number = 0;
 
 io.on("connection", socket =>{
     console.log("connected:", socket.id);
-    if (number > 3) {
-        return;
-    }
-    number = number+1;
+    const number = Object.values(players).includes(1) ? 2 : 1;
+      
+   
     players[socket.id] = number;
     console.log("server your player nyumber:", number);
     socket.emit("playerNumber", number);
