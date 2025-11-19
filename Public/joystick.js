@@ -6,6 +6,8 @@ Joystick fungerar:
 för ny joystick: 
 
 let x = new joystick(x, y, r) när man har impoterat in den som joystick i ett atnnat program
+Tänk att yttre cirkeln är r*2
+
 
 sedan i sin update måste man ha:
 x.draw(context)
@@ -14,9 +16,9 @@ x.Eventen(x)
 
 x= postion i x led i canvas
 y = postion i y led i canvas
-r = radius för själva joysticken
+r = radius för själva joysticken inre
+yttre cirkeln är r*2
 
-så först måste man importera in jotystien
 
 
 */
@@ -25,14 +27,15 @@ så först måste man importera in jotystien
 
 export class joystick{
     constructor(x,y,r){
-        this.x = x; // intre x kordinat cirkelen the knob
-        this.y = y; // intre y cirkelen the knob
-        this.r = r; // intre radiys cirkelen the knob
-   
-        this.X = x; //yttre x kordinat cirkelen 
-        this.Y = y; //yttre y kordinat cirkelen 
-        this.R = r*2 // yttre radius th
+        //intre
+        this.x = x;
+        this.y = y; 
+        this.r = r; 
 
+        //yttre
+        this.X = x;  
+        this.Y = y; 
+        this.R = r*2 
 
         this.dx = 0;
         this.dy = 0;
@@ -42,7 +45,22 @@ export class joystick{
     }
        
         draw(context) {
-            //ritar inre cirkeln
+
+
+
+
+            
+           // yttre cireln
+           context.save();
+           context.beginPath();
+           context.arc(this.X,this.Y,this.R, 0, Math.PI *2);   
+           context.lineWidth = 3;
+           context.stroke();        
+            // context.fillStyle ="lightgray";
+            //context.fill();
+           context.restore();
+
+           //ritar inre cirkeln
            context.save();
            context.beginPath();
            context.arc(this.x,this.y,this.r, 0, Math.PI *2);
@@ -52,14 +70,6 @@ export class joystick{
 
 
 
-
-           // yttre cireln
-           context.save();
-           context.beginPath();
-           context.arc(this.X,this.Y,this.R, 0, Math.PI *2);
-           context.lineWidth=3;
-           context.stroke();
-           context.restore();
 
 
 
