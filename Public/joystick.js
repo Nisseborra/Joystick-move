@@ -18,9 +18,6 @@ x= postion i x led i canvas
 y = postion i y led i canvas
 r = radius för själva joysticken inre
 yttre cirkeln är r*2
-
-
-
 */
 
 
@@ -45,10 +42,6 @@ export class joystick{
     }
        
         draw(context) {
-
-
-
-
             
            // yttre cireln
            context.save();
