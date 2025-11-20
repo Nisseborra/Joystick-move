@@ -71,9 +71,10 @@ export class joystick{
         }
 
 
-        drawtext(context){
+        drawtext(context, joystick){  // visar weigted vad x och y ligger i joysticken
             context.font ="20px Arial";
-            context.fillStyle= "x:" + Math.round(this.dx)+ "y:"+ Math.round(this.dy),50, 50 ;
+            context.fillText("x:" + joystick.dx.toFixed(4)+ "y:"+ joystick.dy.toFixed(4), joystick.X - joystick.R -20 , joystick.Y - joystick.R -20 ) ;
+       
         }
 
 
@@ -169,6 +170,9 @@ export class joystick{
 
     }
        
+
+
+
 
 
    

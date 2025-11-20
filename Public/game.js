@@ -22,17 +22,17 @@ let playerNumber = null;
 
 
 
-   // spelare
+// spelare
 let player ={
     1:{
     x: 400,
     y:250,
-    vel: 3,
+    vel: 1,
     },
     2:{
     x: 400,
     y:500,
-    vel: 3,
+    vel: 1,
     }
 }
 
@@ -53,16 +53,29 @@ let player ={
         }
 
 
+    function playerspeed(player, analog){
+            context.font ="20px Arial";
+            context.fillText("x:" + (player.vel*analog.dx).toFixed(4)+ "y:"+ (player.vel*analog.dy).toFixed(4), 100 , 100) ;
+       
+        }
+        
+        
+     
+
+
 
 function update(){
         context.clearRect(0, 0, canvas.width, canvas.height); 
+       
         analog.draw(context);
+        analog.drawtext(context, analog);
+    
         drawplayers(player[1]);
         drawplayers(player[2]);
-       
         
         if(player[playerNumber] != null && player[playerNumber])  {
             movePlayer(player[playerNumber], analog);
+            playerspeed(player[playerNumber], analog);
         
             socket.emit("uppos", {
                 number: playerNumber,
@@ -82,6 +95,7 @@ function update(){
     let analog = new joystick( 375, 800, 50)
 
     analog.Eventen(analog);
+    analog.drawtext(context, analog);
     update();
  
 
